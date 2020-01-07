@@ -23,31 +23,31 @@ public class penerima_raskin extends javax.swing.JInternalFrame {
         initComponents();
         selectData();
     }
-    
-    public String autonumber(){
+
+    public String autonumber() {
         String sql = "SELECT ID_CALON FROM calon ORDER BY ID_CALON DESC";
         ResultSet rs = Database.executeQuery(sql);
         String idcalon = null;
-        
+
         try {
             if (rs.next()) {
                 String number = rs.getString("ID_CALON").substring(5);
                 String new_number = "" + (Integer.parseInt(number) + 1);
 
-               idcalon = "calon" + new_number;//sesuaikan dengan variable namenya
+                idcalon = "calon" + new_number;//sesuaikan dengan variable namenya
             } else {
-               idcalon = "calon1";//sesuaikan dengan variable namenya
+                idcalon = "calon1";//sesuaikan dengan variable namenya
             }
-        rs.close();
+            rs.close();
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        
+
         return idcalon;
     }
-    
-    public void selectData(){
-        String kolom[] = {"Nomor KTP","Nama"};
+
+    public void selectData() {
+        String kolom[] = {"Nomor KTP", "Nama"};
         DefaultTableModel dtm = new DefaultTableModel(null, kolom);
         String SQL = "SELECT noktp,nama FROM calon";
         ResultSet rs = Database.executeQuery(SQL);
@@ -55,8 +55,8 @@ public class penerima_raskin extends javax.swing.JInternalFrame {
             while (rs.next()) {
                 String noktp = rs.getString(1);
                 String nama = rs.getString(2);
-                
-                String data[] = {noktp,nama};
+
+                String data[] = {noktp, nama};
                 dtm.addRow(data);
             }
         } catch (Exception e) {
@@ -376,133 +376,159 @@ public class penerima_raskin extends javax.swing.JInternalFrame {
     private void TambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TambahActionPerformed
         //ID
         String id = autonumber();
-        
+
         //normalisasi_tanah
         String tanah = Tanah.getText();
         int ktanah = Integer.parseInt(tanah);
         int ntanah = 0;
-        
-        if (ktanah < 20 ){
+
+        if (ktanah < 20) {
             ntanah = 4;
         }
-        if (ktanah > 19 && ktanah <31 ){
+        if (ktanah > 19 && ktanah < 31) {
             ntanah = 3;
         }
-        if (ktanah > 30 && ktanah <41 ){
+        if (ktanah > 30 && ktanah < 41) {
             ntanah = 2;
         }
-        if (ktanah > 40 ){
+        if (ktanah > 40) {
             ntanah = 1;
         }
-        
+
         //normalisasi_lantai
         String lantai = Lantai.getSelectedItem().toString();
         int nlantai = 0;
-        
-        if (lantai.equals("Tanah")){
+
+        if (lantai.equals("Tanah")) {
             nlantai = 4;
         }
-        if (lantai.equals("Bambu")){
+        if (lantai.equals("Bambu")) {
             nlantai = 3;
         }
-        if (lantai.equals("Plester")){
+        if (lantai.equals("Plester")) {
             nlantai = 2;
         }
-        if (lantai.equals("Keramik")){
+        if (lantai.equals("Keramik")) {
             nlantai = 1;
         }
-        
+
         //normalisasi_dinding
         String dinding = Dinding.getSelectedItem().toString();
         int ndinding = 0;
-        
-        if (dinding.equals("Bambu")){
+
+        if (dinding.equals("Bambu")) {
             ndinding = 4;
         }
-        if (dinding.equals("Rumbia")){
+        if (dinding.equals("Rumbia")) {
             ndinding = 3;
         }
-        if (dinding.equals("Kayu Sengon")){
+        if (dinding.equals("Kayu Sengon")) {
             ndinding = 2;
         }
-        if (dinding.equals("Tembok tanpa diplester")){
+        if (dinding.equals("Tembok tanpa diplester")) {
             ndinding = 1;
         }
-        
+
         //normalisasi_pekerjaan
         String pekerjaan = Pekerjaan.getSelectedItem().toString();
         int npekerjaan = 0;
-        
-        if (pekerjaan.equals("Buruh")){
+
+        if (pekerjaan.equals("Buruh")) {
             npekerjaan = 4;
         }
-        if (pekerjaan.equals("Petani")){
+        if (pekerjaan.equals("Petani")) {
             npekerjaan = 3;
         }
-        if (pekerjaan.equals("PNS")){
+        if (pekerjaan.equals("PNS")) {
             npekerjaan = 2;
         }
-        if (pekerjaan.equals("Wirausaha")){
+        if (pekerjaan.equals("Wirausaha")) {
             npekerjaan = 1;
         }
-        
+
         //normalisasi_penghasilan
         String penghasilan = Penghasilan.getText();
         int kpenghasilan = Integer.parseInt(penghasilan);
         int npenghasilan = 0;
-        
-        if (kpenghasilan < 500000 ){
+
+        if (kpenghasilan < 500000) {
             npenghasilan = 4;
         }
-        if (kpenghasilan > 499999 && kpenghasilan <1000001 ){
+        if (kpenghasilan > 499999 && kpenghasilan < 1000001) {
             npenghasilan = 3;
         }
-        if (kpenghasilan > 1000000 && kpenghasilan <3000001 ){
+        if (kpenghasilan > 1000000 && kpenghasilan < 3000001) {
             npenghasilan = 2;
         }
-        if (kpenghasilan > 3000000 ){
+        if (kpenghasilan > 3000000) {
             npenghasilan = 1;
         }
-        
+
         //preferensi
         int preferensi = 0;
-        
+
         //add_data
-        String SQL = "INSERT INTO calon (ID_CALON,NOKTP,NAMA,TANAH,LANTAI,DINDING,PEKERJAAN,PENGHASILAN,"+
-                "NTANAH,NLANTAI,NDINDING,NPEKERJAAN,NPENGHASILAN,PREFERENSI)"
-                    + "VALUES"
-                    + "('"+id+"',"
-                    + "'"+NoKTP.getText()+"',"
-                    + "'"+Nama.getText()+"',"
-                    + "'"+Tanah.getText()+"',"
-                    + "'"+Lantai.getSelectedItem().toString()+"',"
-                    + "'"+Dinding.getSelectedItem().toString()+"',"
-                    + "'"+Pekerjaan.getSelectedItem().toString()+"',"
-                    + "'"+Penghasilan.getText()+"',"
-                    + "'"+ntanah+"',"
-                    + "'"+nlantai+"',"
-                    + "'"+ndinding+"',"
-                    + "'"+npekerjaan+"',"
-                    + "'"+npenghasilan+"',"
-                    + "'"+preferensi+"')";
+        String SQL = "INSERT INTO calon (ID_CALON,NOKTP,NAMA,TANAH,LANTAI,DINDING,PEKERJAAN,PENGHASILAN,"
+                + "NTANAH,NLANTAI,NDINDING,NPEKERJAAN,NPENGHASILAN,PREFERENSI)"
+                + "VALUES"
+                + "('" + id + "',"
+                + "'" + NoKTP.getText() + "',"
+                + "'" + Nama.getText() + "',"
+                + "'" + Tanah.getText() + "',"
+                + "'" + Lantai.getSelectedItem().toString() + "',"
+                + "'" + Dinding.getSelectedItem().toString() + "',"
+                + "'" + Pekerjaan.getSelectedItem().toString() + "',"
+                + "'" + Penghasilan.getText() + "',"
+                + "'" + ntanah + "',"
+                + "'" + nlantai + "',"
+                + "'" + ndinding + "',"
+                + "'" + npekerjaan + "',"
+                + "'" + npenghasilan + "',"
+                + "'" + preferensi + "')";
         Database.execute(SQL);
+
         selectData();
+        NoKTP.setText("-- Silahkan isi nomor KTP --");
+        Nama.setText("-- Silahkan isi nama --");
+        Tanah.setText("-- Silahkan isi luas tanah --");
+        Lantai.setSelectedItem("-- Silahkan pilih jenis lantai --");
+        Dinding.setSelectedItem("-- Silahkan pilih jenis dinding --");
+        Pekerjaan.setSelectedItem("-- Silahkan pilih jenis pekerjaan --");
+        Penghasilan.setText("-- Silahkan masukan besar penghasilan --");
     }//GEN-LAST:event_TambahActionPerformed
 
     private void ClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ClearActionPerformed
-        // TODO add your handling code here:
-        System.out.println(autonumber());
+        selectData();
+        NoKTP.setText("-- Silahkan isi nomor KTP --");
+        Nama.setText("-- Silahkan isi nama --");
+        Tanah.setText("-- Silahkan isi luas tanah --");
+        Lantai.setSelectedItem("-- Silahkan pilih jenis lantai --");
+        Dinding.setSelectedItem("-- Silahkan pilih jenis dinding --");
+        Pekerjaan.setSelectedItem("-- Silahkan pilih jenis pekerjaan --");
+        Penghasilan.setText("-- Silahkan masukan besar penghasilan --");
+        
+        topsis.NBTanah();
+        topsis.NBLantai();
+        topsis.NBDinding();
+        topsis.NBPekerjaan();
+        topsis.NBPenghasilan();
+        
+        System.out.println(topsis.SIPTanah());
+        System.out.println(topsis.SIPLantai());
+        System.out.println(topsis.SIPDinding());
+        System.out.println(topsis.SIPPekerjaan());
+        System.out.println(topsis.SIPPenghaasilan());
     }//GEN-LAST:event_ClearActionPerformed
 
     private void tabelDataMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelDataMouseClicked
         // TODO add your handling code here:
         int baris = tabelData.getSelectedRow();
-        
+
         try {
-            String SQL = "SELECT noktp,nama,tanah,lantai,dinding,pekerjaan,penghasilan FROM calon WHERE noktp = '" +
-                    tabelData.getValueAt(baris, 0).toString()+"'";
+            String SQL = "SELECT noktp,nama,tanah,lantai,dinding,pekerjaan,penghasilan FROM calon WHERE noktp = '"
+                    + tabelData.getValueAt(baris, 0).toString() + "'";
             ResultSet rs = Database.executeQuery(SQL);
-            
+
             while (rs.next()) {
                 Object[] ob = new Object[7];
                 ob[0] = rs.getString(1);
@@ -512,7 +538,7 @@ public class penerima_raskin extends javax.swing.JInternalFrame {
                 ob[4] = rs.getString(5);
                 ob[5] = rs.getString(6);
                 ob[6] = rs.getString(7);
-                
+
                 NoKTP.setText((String) ob[0]);
                 Nama.setText((String) ob[1]);
                 Tanah.setText((String) ob[2]);
@@ -531,39 +557,46 @@ public class penerima_raskin extends javax.swing.JInternalFrame {
         if (baris != -1) {
             String ID = tabelData.getValueAt(baris, 0).toString();
             String Nama = tabelData.getValueAt(baris, 1).toString();
-            String SQL = "DELETE FROM calon where NoKTP = '"+ID+"' AND NAMA = '"+Nama+"'";
+            String SQL = "DELETE FROM calon where NoKTP = '" + ID + "' AND NAMA = '" + Nama + "'";
             int status = Database.execute(SQL);
             if (status == 1) {
                 JOptionPane.showMessageDialog(this, "Data berhasil dihapus", "Sukses", JOptionPane.INFORMATION_MESSAGE);
-            }else{
+            } else {
                 JOptionPane.showMessageDialog(this, "Data gagal dihapus", "Gagal", JOptionPane.WARNING_MESSAGE);
             }
-        }else{
+        } else {
             JOptionPane.showMessageDialog(this, "Pilih Baris Data Terlebih dahulu", "Error", JOptionPane.WARNING_MESSAGE);
         }
-        
+
         selectData();
+        NoKTP.setText("-- Silahkan isi nomor KTP --");
+        Nama.setText("-- Silahkan isi nama --");
+        Tanah.setText("-- Silahkan isi luas tanah --");
+        Lantai.setSelectedItem("-- Silahkan pilih jenis lantai --");
+        Dinding.setSelectedItem("-- Silahkan pilih jenis dinding --");
+        Pekerjaan.setSelectedItem("-- Silahkan pilih jenis pekerjaan --");
+        Penghasilan.setText("-- Silahkan masukan besar penghasilan --");
     }//GEN-LAST:event_HapusActionPerformed
 
     private void UpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UpdateActionPerformed
         //if ("".equals(txtID_NOTA.getText()) || "".equals(txtID_MENU.getText()) || "".equals(txtJumlah.getText()) || "".equals(txtTotal.getText())) {
-            //JOptionPane.showMessageDialog(this, "Harap Lengkapi Data", "Error", JOptionPane.WARNING_MESSAGE);
+        //JOptionPane.showMessageDialog(this, "Harap Lengkapi Data", "Error", JOptionPane.WARNING_MESSAGE);
         //}else{
-            
+
         //get_id
         int baris = tabelData.getSelectedRow();
         String id = null;
-        
+
         try {
             String sql = "SELECT id_calon FROM calon WHERE "
-                    + "noktp = '" + tabelData.getValueAt(baris, 0).toString()+"' AND "
-                    + "nama = '" + tabelData.getValueAt(baris, 1).toString()+"'";
+                    + "noktp = '" + tabelData.getValueAt(baris, 0).toString() + "' AND "
+                    + "nama = '" + tabelData.getValueAt(baris, 1).toString() + "'";
             ResultSet rs = Database.executeQuery(sql);
-            
+
             while (rs.next()) {
                 Object[] ob = new Object[1];
                 ob[0] = rs.getString(1);
-                
+
                 id = (String) ob[0];
             }
         } catch (Exception e) {
@@ -574,110 +607,119 @@ public class penerima_raskin extends javax.swing.JInternalFrame {
         String tanah = Tanah.getText();
         int ktanah = Integer.parseInt(tanah);
         int ntanah = 0;
-        
-        if (ktanah < 20 ){
+
+        if (ktanah < 20) {
             ntanah = 4;
         }
-        if (ktanah > 19 && ktanah <31 ){
+        if (ktanah > 19 && ktanah < 31) {
             ntanah = 3;
         }
-        if (ktanah > 30 && ktanah <41 ){
+        if (ktanah > 30 && ktanah < 41) {
             ntanah = 2;
         }
-        if (ktanah > 40 ){
+        if (ktanah > 40) {
             ntanah = 1;
         }
-        
+
         //normalisasi_lantai
         String lantai = Lantai.getSelectedItem().toString();
         int nlantai = 0;
-        
-        if (lantai.equals("Tanah")){
+
+        if (lantai.equals("Tanah")) {
             nlantai = 4;
         }
-        if (lantai.equals("Bambu")){
+        if (lantai.equals("Bambu")) {
             nlantai = 3;
         }
-        if (lantai.equals("Plester")){
+        if (lantai.equals("Plester")) {
             nlantai = 2;
         }
-        if (lantai.equals("Keramik")){
+        if (lantai.equals("Keramik")) {
             nlantai = 1;
         }
-        
+
         //normalisasi_dinding
         String dinding = Dinding.getSelectedItem().toString();
         int ndinding = 0;
-        
-        if (dinding.equals("Bambu")){
+
+        if (dinding.equals("Bambu")) {
             ndinding = 4;
         }
-        if (dinding.equals("Rumbia")){
+        if (dinding.equals("Rumbia")) {
             ndinding = 3;
         }
-        if (dinding.equals("Kayu Sengon")){
+        if (dinding.equals("Kayu Sengon")) {
             ndinding = 2;
         }
-        if (dinding.equals("Tembok tanpa diplester")){
+        if (dinding.equals("Tembok tanpa diplester")) {
             ndinding = 1;
         }
-        
+
         //normalisasi_pekerjaan
         String pekerjaan = Pekerjaan.getSelectedItem().toString();
         int npekerjaan = 0;
-        
-        if (pekerjaan.equals("Buruh")){
+
+        if (pekerjaan.equals("Buruh")) {
             npekerjaan = 4;
         }
-        if (pekerjaan.equals("Petani")){
+        if (pekerjaan.equals("Petani")) {
             npekerjaan = 3;
         }
-        if (pekerjaan.equals("PNS")){
+        if (pekerjaan.equals("PNS")) {
             npekerjaan = 2;
         }
-        if (pekerjaan.equals("Wirausaha")){
+        if (pekerjaan.equals("Wirausaha")) {
             npekerjaan = 1;
         }
-        
+
         //normalisasi_penghasilan
         String penghasilan = Penghasilan.getText();
         int kpenghasilan = Integer.parseInt(penghasilan);
         int npenghasilan = 0;
-        
-        if (kpenghasilan < 500000 ){
+
+        if (kpenghasilan < 500000) {
             npenghasilan = 4;
         }
-        if (kpenghasilan > 499999 && kpenghasilan <1000001 ){
+        if (kpenghasilan > 499999 && kpenghasilan < 1000001) {
             npenghasilan = 3;
         }
-        if (kpenghasilan > 1000000 && kpenghasilan <3000001 ){
+        if (kpenghasilan > 1000000 && kpenghasilan < 3000001) {
             npenghasilan = 2;
         }
-        if (kpenghasilan > 3000000 ){
+        if (kpenghasilan > 3000000) {
             npenghasilan = 1;
         }
-        
+
         String SQL = "UPDATE calon SET "
-                    + "NoKTP = '"+NoKTP.getText()+"', "
-                    + "Nama = '"+Nama.getText()+"',"
-                    + "Tanah = '"+Tanah.getText()+"',"
-                    + "Lantai = '"+Lantai.getSelectedItem().toString()+"',"
-                    + "Dinding = '"+Dinding.getSelectedItem().toString()+"',"
-                    + "Pekerjaan = '"+Pekerjaan.getSelectedItem().toString()+"',"
-                    + "Penghasilan = '"+Penghasilan.getText()+"',"
-                    + "NTanah = '"+ntanah+"',"
-                    + "NLantai = '"+nlantai+"',"
-                    + "NDinding = '"+ndinding+"',"
-                    + "NPekerjaan = '"+npekerjaan+"',"
-                    + "NPenghasilan = '"+npenghasilan+"'"
-                    + "WHERE ID_CALON = '"+ id +"'";
-            int status = Database.execute(SQL);
-            if (status == 1) {
-                JOptionPane.showMessageDialog(this, "Data berhasil diubah", "Sukses", JOptionPane.INFORMATION_MESSAGE);
-                selectData();
-            }else{
-                JOptionPane.showMessageDialog(this, "Data gagal diubah", "Gagal", JOptionPane.WARNING_MESSAGE);
-            }
+                + "NoKTP = '" + NoKTP.getText() + "', "
+                + "Nama = '" + Nama.getText() + "',"
+                + "Tanah = '" + Tanah.getText() + "',"
+                + "Lantai = '" + Lantai.getSelectedItem().toString() + "',"
+                + "Dinding = '" + Dinding.getSelectedItem().toString() + "',"
+                + "Pekerjaan = '" + Pekerjaan.getSelectedItem().toString() + "',"
+                + "Penghasilan = '" + Penghasilan.getText() + "',"
+                + "NTanah = '" + ntanah + "',"
+                + "NLantai = '" + nlantai + "',"
+                + "NDinding = '" + ndinding + "',"
+                + "NPekerjaan = '" + npekerjaan + "',"
+                + "NPenghasilan = '" + npenghasilan + "'"
+                + "WHERE ID_CALON = '" + id + "'";
+        int status = Database.execute(SQL);
+        if (status == 1) {
+            JOptionPane.showMessageDialog(this, "Data berhasil diubah", "Sukses", JOptionPane.INFORMATION_MESSAGE);
+            selectData();
+        } else {
+            JOptionPane.showMessageDialog(this, "Data gagal diubah", "Gagal", JOptionPane.WARNING_MESSAGE);
+        }
+
+        selectData();
+        NoKTP.setText("-- Silahkan isi nomor KTP --");
+        Nama.setText("-- Silahkan isi nama --");
+        Tanah.setText("-- Silahkan isi luas tanah --");
+        Lantai.setSelectedItem("-- Silahkan pilih jenis lantai --");
+        Dinding.setSelectedItem("-- Silahkan pilih jenis dinding --");
+        Pekerjaan.setSelectedItem("-- Silahkan pilih jenis pekerjaan --");
+        Penghasilan.setText("-- Silahkan masukan besar penghasilan --");
         //}
     }//GEN-LAST:event_UpdateActionPerformed
 

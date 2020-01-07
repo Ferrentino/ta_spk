@@ -5,6 +5,10 @@
  */
 package ta.spk;
 
+import java.sql.ResultSet;
+import java.util.logging.Level;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author lenovo
@@ -30,10 +34,10 @@ public class laporan extends javax.swing.JInternalFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jSpinner1 = new javax.swing.JSpinner();
-        jButton1 = new javax.swing.JButton();
+        banyak = new javax.swing.JSpinner();
+        proses = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tabelLaporan = new javax.swing.JTable();
 
         setClosable(true);
         setIconifiable(true);
@@ -68,11 +72,16 @@ public class laporan extends javax.swing.JInternalFrame {
 
         jLabel2.setText("Masukkan jumlah calon yang berhak mendapat beras miskin");
 
-        jSpinner1.setModel(new javax.swing.SpinnerNumberModel(1, null, null, 1));
+        banyak.setModel(new javax.swing.SpinnerNumberModel(1, null, null, 1));
 
-        jButton1.setText("Proses");
+        proses.setText("Proses");
+        proses.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                prosesActionPerformed(evt);
+            }
+        });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tabelLaporan.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null},
                 {null, null},
@@ -83,7 +92,7 @@ public class laporan extends javax.swing.JInternalFrame {
                 "Nomor KTP", "Nama"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tabelLaporan);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -98,9 +107,9 @@ public class laporan extends javax.swing.JInternalFrame {
                         .addGap(22, 22, 22)
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(banyak, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton1)))
+                        .addComponent(proses)))
                 .addContainerGap(32, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -110,8 +119,8 @@ public class laporan extends javax.swing.JInternalFrame {
                 .addGap(25, 25, 25)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
+                    .addComponent(banyak, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(proses))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 19, Short.MAX_VALUE))
@@ -120,14 +129,35 @@ public class laporan extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void prosesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_prosesActionPerformed
+        String parameter = banyak.getValue().toString();
+
+        String kolom[] = {"Nomor KTP", "Nama"};
+        DefaultTableModel dtm = new DefaultTableModel(null, kolom);
+        String SQL = "SELECT noktp,nama FROM calon ORDER BY preferensi DESC LIMIT "+parameter;
+        ResultSet rs = Database.executeQuery(SQL);
+        try {
+            while (rs.next()) {
+                String noktp = rs.getString(1);
+                String nama = rs.getString(2);
+
+                String data[] = {noktp, nama};
+                dtm.addRow(data);
+            }
+        } catch (Exception e) {
+            java.util.logging.Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, e);
+        }
+        tabelLaporan.setModel(dtm);
+    }//GEN-LAST:event_prosesActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JSpinner banyak;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JSpinner jSpinner1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JButton proses;
+    private javax.swing.JTable tabelLaporan;
     // End of variables declaration//GEN-END:variables
 }
