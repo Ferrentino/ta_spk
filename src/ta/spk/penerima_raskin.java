@@ -506,18 +506,6 @@ public class penerima_raskin extends javax.swing.JInternalFrame {
         Dinding.setSelectedItem("-- Silahkan pilih jenis dinding --");
         Pekerjaan.setSelectedItem("-- Silahkan pilih jenis pekerjaan --");
         Penghasilan.setText("-- Silahkan masukan besar penghasilan --");
-        
-        topsis.NBTanah();
-        topsis.NBLantai();
-        topsis.NBDinding();
-        topsis.NBPekerjaan();
-        topsis.NBPenghasilan();
-        
-        System.out.println(topsis.SIPTanah());
-        System.out.println(topsis.SIPLantai());
-        System.out.println(topsis.SIPDinding());
-        System.out.println(topsis.SIPPekerjaan());
-        System.out.println(topsis.SIPPenghaasilan());
     }//GEN-LAST:event_ClearActionPerformed
 
     private void tabelDataMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelDataMouseClicked

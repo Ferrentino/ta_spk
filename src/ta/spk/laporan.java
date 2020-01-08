@@ -83,13 +83,13 @@ public class laporan extends javax.swing.JInternalFrame {
 
         tabelLaporan.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
             },
             new String [] {
-                "Nomor KTP", "Nama"
+                "Nomor KTP", "Nama", "Preferensi"
             }
         ));
         jScrollPane1.setViewportView(tabelLaporan);
@@ -130,18 +130,21 @@ public class laporan extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void prosesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_prosesActionPerformed
+        topsis.Preferensi();
+        
         String parameter = banyak.getValue().toString();
 
-        String kolom[] = {"Nomor KTP", "Nama"};
+        String kolom[] = {"Nomor KTP", "Nama", "Preferensi"};
         DefaultTableModel dtm = new DefaultTableModel(null, kolom);
-        String SQL = "SELECT noktp,nama FROM calon ORDER BY preferensi DESC LIMIT "+parameter;
+        String SQL = "SELECT noktp, nama, preferensi FROM calon ORDER BY preferensi DESC LIMIT "+parameter;
         ResultSet rs = Database.executeQuery(SQL);
         try {
             while (rs.next()) {
                 String noktp = rs.getString(1);
                 String nama = rs.getString(2);
+                String preferensi =rs.getString(3);
 
-                String data[] = {noktp, nama};
+                String data[] = {noktp, nama, preferensi};
                 dtm.addRow(data);
             }
         } catch (Exception e) {

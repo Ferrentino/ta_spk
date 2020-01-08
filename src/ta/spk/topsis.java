@@ -7,7 +7,6 @@ package ta.spk;
 
 import java.sql.ResultSet;
 import java.util.logging.Level;
-import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -32,7 +31,7 @@ public class topsis {
 
     
     
-    //Tanah-----------------------------------------------------------------------------------------------------------------
+    //NBTanah-----------------------------------------------------------------------------------------------------------------
     //----------------------------------------------------------------------------------------------------------------------
     public static int bobotTanah() {
         int bobot = 0;
@@ -106,7 +105,7 @@ public class topsis {
  
     
     
-    //Lantai---------------------------------------------------------------------------------------------------------------
+    //NBLantai---------------------------------------------------------------------------------------------------------------
     //---------------------------------------------------------------------------------------------------------------------
     public static int bobotLantai() {
         int bobot = 0;
@@ -180,7 +179,7 @@ public class topsis {
     
     
     
-    //Dinding---------------------------------------------------------------------------------------------------------------
+    //NBDinding---------------------------------------------------------------------------------------------------------------
     //---------------------------------------------------------------------------------------------------------------------
     public static int bobotDinding() {
         int bobot = 0;
@@ -254,7 +253,7 @@ public class topsis {
     
     
     
-    //Pekerjaan---------------------------------------------------------------------------------------------------------------
+    //NBPekerjaan---------------------------------------------------------------------------------------------------------------
     //---------------------------------------------------------------------------------------------------------------------
     public static int bobotPekerjaan() {
         int bobot = 0;
@@ -328,7 +327,7 @@ public class topsis {
     
     
     
-    //Penghasilan---------------------------------------------------------------------------------------------------------------
+    //NBPenghasilan---------------------------------------------------------------------------------------------------------------
     //---------------------------------------------------------------------------------------------------------------------
     public static int bobotPenghasilan() {
         int bobot = 0;
@@ -472,7 +471,7 @@ public class topsis {
         return nilai;
     }
     
-    public static double SIPPenghaasilan(){
+    public static double SIPPenghasilan(){
         String SQL = "SELECT nbpenghasilan FROM calon ORDER BY nbpenghasilan DESC LIMIT 1";
         ResultSet rs = Database.executeQuery(SQL);
         double nilai = 0;
@@ -487,5 +486,218 @@ public class topsis {
         }
         
         return nilai;
+    }
+    
+    
+    
+    
+   //Solusi Ideal Negatif---------------------------------------------------------------------------------------------------------------
+    //---------------------------------------------------------------------------------------------------------------------
+    public static double SINTanah(){
+        String SQL = "SELECT nbtanah FROM calon ORDER BY nbtanah ASC LIMIT 1";
+        ResultSet rs = Database.executeQuery(SQL);
+        double nilai = 0;
+        
+        try {
+            while (rs.next()) {
+                String sip = rs.getString(1);
+                nilai = Double.parseDouble(sip);
+            }
+        } catch (Exception e) {
+            java.util.logging.Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, e);
+        }
+        
+        return nilai;
+    }
+    
+    public static double SINLantai(){
+        String SQL = "SELECT nblantai FROM calon ORDER BY nblantai ASC LIMIT 1";
+        ResultSet rs = Database.executeQuery(SQL);
+        double nilai = 0;
+        
+        try {
+            while (rs.next()) {
+                String sip = rs.getString(1);
+                nilai = Double.parseDouble(sip);
+            }
+        } catch (Exception e) {
+            java.util.logging.Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, e);
+        }
+        
+        return nilai;
+    }
+    
+    public static double SINDinding(){
+        String SQL = "SELECT nbdinding FROM calon ORDER BY nbdinding ASC LIMIT 1";
+        ResultSet rs = Database.executeQuery(SQL);
+        double nilai = 0;
+        
+        try {
+            while (rs.next()) {
+                String sip = rs.getString(1);
+                nilai = Double.parseDouble(sip);
+            }
+        } catch (Exception e) {
+            java.util.logging.Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, e);
+        }
+        
+        return nilai;
+    }
+    
+    public static double SINPekerjaan(){
+        String SQL = "SELECT nbpekerjaan FROM calon ORDER BY nbpekerjaan ASC LIMIT 1";
+        ResultSet rs = Database.executeQuery(SQL);
+        double nilai = 0;
+        
+        try {
+            while (rs.next()) {
+                String sip = rs.getString(1);
+                nilai = Double.parseDouble(sip);
+            }
+        } catch (Exception e) {
+            java.util.logging.Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, e);
+        }
+        
+        return nilai;
+    }
+    
+    public static double SINPenghasilan(){
+        String SQL = "SELECT nbpenghasilan FROM calon ORDER BY nbpenghasilan ASC LIMIT 1";
+        ResultSet rs = Database.executeQuery(SQL);
+        double nilai = 0;
+        
+        try {
+            while (rs.next()) {
+                String sip = rs.getString(1);
+                nilai = Double.parseDouble(sip);
+            }
+        } catch (Exception e) {
+            java.util.logging.Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, e);
+        }
+        
+        return nilai;
+    }
+    
+    
+    
+    //JSIP---------------------------------------------------------------------------------------------------------------
+    //---------------------------------------------------------------------------------------------------------------------
+    public static void JSIP() {
+        String[] idcalon = new String[jumlahCalon()];
+        double[] jsip = new double[jumlahCalon()];
+        int x = 0;
+
+        String SQL = "SELECT id_calon, nbtanah, nblantai, nbdinding, nbpekerjaan, nbpenghasilan FROM calon";
+        ResultSet rs = Database.executeQuery(SQL);
+
+        try {
+            while (rs.next()) {
+                String id = rs.getString(1);
+                double tanah = Math.pow((Double.parseDouble(rs.getString(2))-SIPTanah()), 2);
+                double lantai = Math.pow((Double.parseDouble(rs.getString(3))-SIPLantai()), 2);
+                double dinding = Math.pow((Double.parseDouble(rs.getString(4))-SIPDinding()), 2);
+                double pekerjaan = Math.pow((Double.parseDouble(rs.getString(5))-SIPPekerjaan()), 2);
+                double penghasilan = Math.pow((Double.parseDouble(rs.getString(6))-SIPPenghasilan()), 2);
+                
+                double total =tanah + lantai + dinding + pekerjaan + penghasilan;
+
+                idcalon[x] = id;
+                jsip[x] = Math.sqrt(total);
+                x++;
+            }
+        } catch (Exception e) {
+            java.util.logging.Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, e);
+        }
+
+        for (int i = 0; i < jumlahCalon(); i++) {
+            String sql = "UPDATE calon SET "
+                    + "JSIP = '" + jsip[i] + "'"
+                    + "WHERE ID_CALON = '" + idcalon[i] + "'";
+            Database.execute(sql);
+        }
+    }
+    
+    
+    
+    //JSIN---------------------------------------------------------------------------------------------------------------
+    //---------------------------------------------------------------------------------------------------------------------
+    public static void JSIN() {
+        String[] idcalon = new String[jumlahCalon()];
+        double[] jsin = new double[jumlahCalon()];
+        int x = 0;
+
+        String SQL = "SELECT id_calon, nbtanah, nblantai, nbdinding, nbpekerjaan, nbpenghasilan FROM calon";
+        ResultSet rs = Database.executeQuery(SQL);
+
+        try {
+            while (rs.next()) {
+                String id = rs.getString(1);
+                double tanah = Math.pow((Double.parseDouble(rs.getString(2))-SINTanah()), 2);
+                double lantai = Math.pow((Double.parseDouble(rs.getString(3))-SINLantai()), 2);
+                double dinding = Math.pow((Double.parseDouble(rs.getString(4))-SINDinding()), 2);
+                double pekerjaan = Math.pow((Double.parseDouble(rs.getString(5))-SINPekerjaan()), 2);
+                double penghasilan = Math.pow((Double.parseDouble(rs.getString(6))-SINPenghasilan()), 2);
+                
+                double total =tanah + lantai + dinding + pekerjaan + penghasilan;
+
+                idcalon[x] = id;
+                jsin[x] = Math.sqrt(total);
+                x++;
+            }
+        } catch (Exception e) {
+            java.util.logging.Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, e);
+        }
+
+        for (int i = 0; i < jumlahCalon(); i++) {
+            String sql = "UPDATE calon SET "
+                    + "JSIN = '" + jsin[i] + "'"
+                    + "WHERE ID_CALON = '" + idcalon[i] + "'";
+            Database.execute(sql);
+        }
+    }
+    
+    
+    
+    //Preferensi---------------------------------------------------------------------------------------------------------------
+    //---------------------------------------------------------------------------------------------------------------------
+    public static void Preferensi() {
+        NBTanah();
+        NBLantai();
+        NBDinding();
+        NBPekerjaan();
+        NBPenghasilan();
+        
+        JSIP();
+        JSIN();
+        
+        String[] idcalon = new String[jumlahCalon()];
+        double[] preferensi = new double[jumlahCalon()];
+        int x = 0;
+
+        String SQL = "SELECT id_calon, jsip, jsin FROM calon";
+        ResultSet rs = Database.executeQuery(SQL);
+
+        try {
+            while (rs.next()) {
+                String id = rs.getString(1);
+                double jsip = Double.parseDouble(rs.getString(2));
+                double jsin = Double.parseDouble(rs.getString(3));
+                
+                double nilai = jsin / (jsip + jsin);
+
+                idcalon[x] = id;
+                preferensi[x] = nilai;
+                x++;
+            }
+        } catch (Exception e) {
+            java.util.logging.Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, e);
+        }
+
+        for (int i = 0; i < jumlahCalon(); i++) {
+            String sql = "UPDATE calon SET "
+                    + "Preferensi = '" + preferensi[i] + "'"
+                    + "WHERE ID_CALON = '" + idcalon[i] + "'";
+            Database.execute(sql);
+        }
     }
 }
