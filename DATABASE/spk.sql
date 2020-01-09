@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 09, 2020 at 04:41 AM
+-- Generation Time: Jan 09, 2020 at 05:13 AM
 -- Server version: 10.1.38-MariaDB
 -- PHP Version: 7.3.3
 
@@ -53,7 +53,7 @@ INSERT INTO `bobot` (`KODEBOBOT`, `KRITERIA`, `BOBOT`) VALUES
 
 CREATE TABLE `calon` (
   `ID_CALON` varchar(50) NOT NULL,
-  `NOKTP` bigint(20) DEFAULT NULL,
+  `NOKTP` bigint(50) DEFAULT NULL,
   `NAMA` varchar(50) DEFAULT NULL,
   `TANAH` int(11) DEFAULT NULL,
   `LANTAI` varchar(50) DEFAULT NULL,
@@ -81,7 +81,15 @@ CREATE TABLE `calon` (
 
 INSERT INTO `calon` (`ID_CALON`, `NOKTP`, `NAMA`, `TANAH`, `LANTAI`, `DINDING`, `PEKERJAAN`, `PENGHASILAN`, `NTANAH`, `NLANTAI`, `NDINDING`, `NPEKERJAAN`, `NPENGHASILAN`, `NBTANAH`, `NBLANTAI`, `NBDINDING`, `NBPEKERJAAN`, `NBPENGHASILAN`, `JSIP`, `JSIN`, `PREFERENSI`) VALUES
 ('calon1', 350725701020301, 'Supali', 50, 'Plester', 'Kayu Sengon', 'Petani', 750000, 1, 2, 2, 3, 3, '0.063245553', '0.141421356', '0.141421356', '0.141421356', '0.141421356', '0.126491107', '0.000000000', '0.000000000'),
-('calon2', 350725701020302, 'Supeno', 20, 'Plester', 'Kayu Sengon', 'Petani', 650000, 3, 2, 2, 3, 3, '0.189736660', '0.141421356', '0.141421356', '0.141421356', '0.141421356', '0.000000000', '0.126491107', '1.000000000');
+('calon10', 350725701020310, 'Sukir', 43, 'Bambu', 'Rumbia', 'Wirausaha', 3000000, 1, 3, 3, 1, 2, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0.000000000'),
+('calon2', 350725701020302, 'Supeno', 20, 'Plester', 'Kayu Sengon', 'Petani', 650000, 3, 2, 2, 3, 3, '0.189736660', '0.141421356', '0.141421356', '0.141421356', '0.141421356', '0.000000000', '0.126491107', '1.000000000'),
+('calon3', 350725701020303, 'Janoko', 13, 'Plester', 'Bambu', 'PNS', 1200000, 4, 2, 4, 2, 2, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0.000000000'),
+('calon4', 350725701020304, 'Parno', 50, 'Bambu', 'Kayu Sengon', 'PNS', 1200000, 1, 3, 2, 2, 2, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0.000000000'),
+('calon5', 350725701020305, 'Sutisno', 12, 'Keramik', 'Rumbia', 'Buruh', 1500000, 4, 1, 3, 4, 2, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0.000000000'),
+('calon6', 350725701020306, 'Dadang', 25, 'Plester', 'Rumbia', 'Wirausaha', 3300000, 3, 2, 3, 1, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0.000000000'),
+('calon7', 350725701020307, 'Sucipto', 24, 'Keramik', 'Kayu Sengon', 'Buruh', 1100000, 3, 1, 2, 4, 2, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0.000000000'),
+('calon8', 350725701020308, 'Hambali', 39, 'Keramik', 'Bambu', 'PNS', 1100000, 2, 1, 4, 2, 2, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0.000000000'),
+('calon9', 350725701020309, 'Gaguk', 24, 'Bambu', 'Tembok tanpa diplester', 'PNS', 1000000, 3, 3, 1, 2, 3, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0.000000000');
 
 --
 -- Indexes for dumped tables
