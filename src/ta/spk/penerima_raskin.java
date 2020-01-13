@@ -495,6 +495,8 @@ public class penerima_raskin extends javax.swing.JInternalFrame {
         Dinding.setSelectedItem("-- Silahkan pilih jenis dinding --");
         Pekerjaan.setSelectedItem("-- Silahkan pilih jenis pekerjaan --");
         Penghasilan.setText("-- Silahkan masukan besar penghasilan --");
+        
+        topsis.Preferensi();
     }//GEN-LAST:event_TambahActionPerformed
 
     private void ClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ClearActionPerformed
@@ -564,6 +566,8 @@ public class penerima_raskin extends javax.swing.JInternalFrame {
         Dinding.setSelectedItem("-- Silahkan pilih jenis dinding --");
         Pekerjaan.setSelectedItem("-- Silahkan pilih jenis pekerjaan --");
         Penghasilan.setText("-- Silahkan masukan besar penghasilan --");
+        
+        topsis.Preferensi();
     }//GEN-LAST:event_HapusActionPerformed
 
     private void UpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UpdateActionPerformed
@@ -709,6 +713,8 @@ public class penerima_raskin extends javax.swing.JInternalFrame {
         Pekerjaan.setSelectedItem("-- Silahkan pilih jenis pekerjaan --");
         Penghasilan.setText("-- Silahkan masukan besar penghasilan --");
         //}
+        
+        topsis.Preferensi();
     }//GEN-LAST:event_UpdateActionPerformed
 
 

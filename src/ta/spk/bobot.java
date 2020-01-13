@@ -313,6 +313,8 @@ public class bobot extends javax.swing.JInternalFrame {
         readDinding();
         readPekerjaan();
         readPenghasilan();
+        
+        topsis.Preferensi();
     }//GEN-LAST:event_SimpanActionPerformed
 
     private void bobotlantaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bobotlantaiActionPerformed
