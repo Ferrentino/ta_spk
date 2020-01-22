@@ -1,0 +1,7 @@
+Proyek : Perancangan Sistem Pendukung Keputusan untuk Pemilihan Calon Penerima Beras Miskin Dengan Metode TOPSIS
+
+Kelompok :
+- Ferrentino Sutjiadi	(161111007)
+- Andrew Christianto 	(161111018)
+- Naila Raudlatul Faiza (161111029)
+
